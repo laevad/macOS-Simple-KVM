@@ -42,15 +42,17 @@ if [[ $1 == "vfio" ]]; then
     fi
     extra="-device vfio-pci,host=$host"
 elif [[ $1 == "install" ]]; then
-    [[ ! -e vol.qcow2 ]] && qemu-img create -f qcow2 vol.qcow2 64G
+    [[ ! -e vol.qcow2 ]] && qemu-img create -f qcow2 vol.qcow2 200G
     if [[ ! $(ls BaseSystem*) ]]; then
-        select opt in "High Sierra" "Mojave" "Catalina"; do
+        select opt in "Catalina (latest compatible)" "Ventura" "Mojave" "High Sierra"; do
             selection=$opt
+            [[ -n $selection ]] && break
         done
         case $selection in
-            "High Sierra" ) ./jumpstart.sh --high-sierra;;
-            "Mojave" )      ./jumpstart.sh --mojave;;
-            "Catalina" )    ./jumpstart.sh --catalina;;
+            "Catalina (latest compatible)" ) ./jumpstart.sh --latest-compatible;;
+            "Ventura" )                      ./jumpstart.sh --ventura;;
+            "Mojave" )                       ./jumpstart.sh --mojave;;
+            "High Sierra" )                  ./jumpstart.sh --high-sierra;;
         esac
     fi
     extra="-drive id=InstallMedia,format=raw,if=none,file=$VMDIR/BaseSystem.img \
