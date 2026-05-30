@@ -53,7 +53,15 @@ Inside the macOS VM, open Safari and download:
 http://10.0.2.2:8000/InstallAssistant.pkg
 ```
 
-Open `InstallAssistant.pkg` in macOS. It installs `Install macOS Tahoe.app` into `/Applications`. Open that app to upgrade the VM to Tahoe.
+After the download finishes, open Finder, go to Downloads, and double-click `InstallAssistant.pkg`. This package does not upgrade macOS by itself; it installs `Install macOS Tahoe.app` into `/Applications`.
+
+Open `/Applications/Install macOS Tahoe.app`, follow the prompts, and choose the Catalina system disk as the upgrade target. The VM will reboot several times during the Tahoe upgrade.
+
+After Tahoe finishes, install Xcode from the App Store or Apple Developer downloads. Open Xcode once to let it install its required components, or run:
+```
+sudo xcodebuild -license accept
+sudo xcodebuild -runFirstLaunch
+```
 
 ## Step 2b (Virtual Machine Manager)
 1. If instead of QEMU, you'd like to import the setup into Virt-Manager for further configuration, just run `sudo ./make.sh --add`.
